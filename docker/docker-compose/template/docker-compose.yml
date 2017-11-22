@@ -1,0 +1,96 @@
+version: '3'
+
+services:
+  webapp:
+    build:
+      context: ./dir
+      dockerfile: Dockerfile-alternate
+      args:
+        buildno: 1
+    image: registry/imagename:tagname
+    command: ["bundle", "exec", "thin", "-p", "3000"]
+    entrypoint: /code/entrypoint.sh
+    expose:
+      - "3000"
+      - "8000"
+    container_name: my-web-container
+    deploy:
+      replicas: 6
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - db
+    dns:
+      - 8.8.8.8
+      - 9.9.9.9
+    env_file: .env
+    environment:
+      - RACK_ENV=development
+      - SHOW=true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "tcp://192.168.0.42:123"
+    network_mode: "bridge"
+    networks:
+      some-network:
+        aliases:
+          - web-network
+      other-network:
+    ports:
+      - "3000"
+      - "3000-3005"
+      - "8000:8000"
+      - "9090-9091:8080-8081"
+      - "49100:22"
+      - "127.0.0.1:8001:8001"
+      - "127.0.0.1:5000-5010:5000-5010"
+      - "6060:6060/udp"
+    sysctls:
+      net.core.somaxconn: 1024
+      net.ipv4.tcp_syncookies: 0
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 20000
+        hard: 40000
+    volumes:
+      - type: volume
+        source: source
+        target: /app
+        volume:
+          nocopy: true
+      - "source:/app"
+    restart: "no"
+    # restart: always
+    # restart: on-failure
+    # restart: unless-stopped
+    user: www
+    working_dir: /app
+    domainname: foo.com
+    hostname: foo
+    ipc: host
+    mac_address: 02:42:ac:11:65:43
+    privileged: true
+    read_only: true
+    shm_size: 64M
+    stdin_open: true
+    tty: true
+
+  db:
+    image: db
+    volumes:
+      - data-volume:/var/lib/db
+
+networks:
+  some-network:
+  other-network:
+    external: true
