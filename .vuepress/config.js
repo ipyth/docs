@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 
 module.exports = {
-  // base: '/docs/',
+  base: '/docs/',
   title: 'Docs',
   themeConfig: {
     logo: '/assets/img/logo.png',
