@@ -39,7 +39,7 @@ function getSidebar() {
     var subSidebarObj = {}
     const childrens = fs
       .readdirSync(path.resolve(__dirname, '..', group))
-      .filter(name => name != 'README.md')
+      .filter(name => name.match(/\.md$/) && (name != 'README.md'))
       .map(name => name.slice(0, -3))
     subSidebarObj['/' + group + '/'] = [
       {
