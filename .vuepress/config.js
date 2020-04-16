@@ -59,7 +59,7 @@ function getSidebar() {
   var sidebarObj = {}
   const groups = fs
     .readdirSync(path.resolve(__dirname, '..'))
-    .filter(filename => filename.match(/^[a-z]+$/))
+    .filter(filename => filename.match(/^[a-z-]+$/))
 
   for (const group of groups) {
     var subSidebarObj = {}
