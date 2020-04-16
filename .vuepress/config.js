@@ -19,9 +19,35 @@ module.exports = {
       {
         text: 'DevOps',
         items: [
-          { text: 'Kubernets', link: '/kubernetes/' },
-          { text: 'Docker', link: '/docker/' },
-          { text: 'Ansible', link: '/ansible/' },
+          {
+            text: 'System Admin',
+            items: [
+              { text: 'Ansible', link: '/ansible/' },
+              { text: 'SaltStack', link: '/saltstack/' },
+            ]
+          },
+          {
+            text: 'Container',
+            items: [
+              { text: 'Docker', link: '/docker/' },
+              { text: 'Kubernets', link: '/kubernetes/' },
+            ]
+          },
+          {
+            text: 'CI/CD',
+            items: [
+              { text: 'Jenkins', link: '/jenkins/' },
+              { text: 'GitLab CI', link: '/gitlab-ci/' },
+            ]
+          },
+          {
+            text: 'Monitor',
+            items: [
+              { text: 'Zabbix', link: '/zabbix/' },
+              { text: 'Prometheus', link: '/prometheus/' },
+              { text: 'Grafana', link: '/grafana/' },
+            ]
+          },
         ]
       },
     ],
